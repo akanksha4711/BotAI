@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import './Home.css'
 import { Stack } from '@mui/material';
@@ -12,6 +12,7 @@ function Home() {
   const [question, setQuestion] = useState("");
   const [chats, setChats] = useState([]);
   const [pastChats, setPastChats] = useState(false);
+  const listRef = useRef(null);
   
   const searchForAnswer = (question) => {
     let maxMatchIdx = 0;
@@ -37,6 +38,9 @@ function Home() {
     setChats(newChats);
   }
   
+  useEffect(() => {
+    listRef.current?.lastElementChild?.scrollIntoView();
+  }, [chats])
   
   return (
     <div>
@@ -103,7 +107,7 @@ function Home() {
                     </Grid>
                 </Grid>
                 </div>}
-                {chats.length!==0 && <Stack direction={'column'} spacing={2} mx={2}>
+                {chats.length!==0 && <Stack ref={listRef} direction={'column'} spacing={2} mx={2}>
                     {chats.map((ch, idx) => <Chat chatObj={ch} chats={chats} setChats={setChats}/>)}
                 </Stack>}
                 <Stack spacing={2} direction={'row'} my={2} mx={2} justifyContent={'space-between'} sx={{
