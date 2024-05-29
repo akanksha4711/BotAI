@@ -6,7 +6,8 @@ function PastConversations() {
   const [allChats, setAllChats] = useState([]);
   const [rating, setRating] = useState(0);
   useEffect(() => {
-    setAllChats(JSON.parse(localStorage.getItem("AllChats")).chats)
+    if(localStorage.getItem("AllChats"))
+      setAllChats(JSON.parse(localStorage.getItem("AllChats")).chats)
   }, [])
   return (
     <div>
